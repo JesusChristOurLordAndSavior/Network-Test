@@ -24,6 +24,13 @@ public class DDoS extends mainData {
 			if(r.getCount()>10)
 			{
 				addToImm(r);
+				for(int j=0;j<suspList.size();j++){
+					request q= new request();
+					if(suspList.get(j).getIP().equals(r.getIP())){
+						suspList.remove(j);
+						j--;
+					}
+				}
 				setIsImmChanged(true);
 			}
 			else if (r.getCount()>7)
@@ -31,18 +38,30 @@ public class DDoS extends mainData {
 				if(r.getStkCount()>=3)
 				{
 					addToBlack(r);
+					for(int j=0;j<suspList.size();j++){						
+						if(suspList.get(j).getIP().equals(r.getIP())){
+							suspList.remove(j);
+							j--;
+						}
 					setIsBlackChanged(true);
 				}
 				suspList.get(i).setCount(r.getCount()+1);
 			}
 			else if (r.getCount()>4){
 				addToTemp(r);
+				for(int j=0;j<suspList.size();j++){
+					if(suspList.get(j).getIP().equals(r.getIP())){
+						suspList.remove(j);
+						j--;
+					}
 				setIsTempChanged(true);
 			}
 		}
 	}
+	}
+	}
 	
-	void addToSusp(request r){
+	public void addToSusp(request r){
 		suspList.add(r); 
 	}
 }

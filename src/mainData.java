@@ -1,10 +1,12 @@
-
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class mainData extends mainProgram {
 	private ArrayList<request> blackList, immList, tempList;
 	private boolean isBlackChanged, isImmChanged, isTempChanged; 
-	
+	private BufferedWriter writer; 
 	public mainData(){
 		blackList= new ArrayList<request>();
 		immList= new ArrayList<request>();
@@ -12,6 +14,13 @@ public class mainData extends mainProgram {
 		isBlackChanged=false;
 		isImmChanged=false;
 		isTempChanged=false;
+		try{
+			writer = new BufferedWriter(new FileWriter("output.txt"));
+		}
+		catch (IOException e){
+			e.getStackTrace();
+		}
+		
 	}	
 	
 	void addToBlack(request threeStrikesAndYoureOut){
@@ -46,27 +55,63 @@ public class mainData extends mainProgram {
 		isTempChanged=b; 
 	}
 	
+	public void writeList(ArrayList<request> list){
+		try{
+			
+			for (request r:list){
+				writer.write(r.getIP());
+				writer.newLine();
+				System.out.println(r.getIP());
+			}
+		}
+		catch(IOException e){
+			e.getStackTrace();
+		}
+	}	
+	
+	
+	public void writeLists(){
+		try{
+		writer.write("List of Temporarily Banned IP Addresses: ");
+		writer.newLine();
+		writeList(tempList);
+		writer.write("List of Immediately and Permanently Banned IP addresses: ");
+		writer.newLine();
+		writeList(immList);
+		writer.write("List of 3 Strike Banned IP addresses");
+		writer.newLine();
+		writeList(blackList);
+		writer.write("This program is presented to you by Universal Studios, thanks Obama");
+		writer.newLine();
+		}
+		catch(IOException e){
+			e.getStackTrace();
+		}
+	}
 	
 	public void displayLists(){
 		System.out.println("List of Temporarily Banned IP addresses: \n\n");
 		for (int i=0; i<tempList.size();i++){
 			System.out.println(tempList.get(i));
+			System.out.println("Number of Requests: "+ tempList.get(i).getCount());
 		}
 		System.out.println("\n\n List of Immediately and Permanently Banned IP addresses:  \n\n");
 		for(int i=0;i<immList.size();i++){
 			System.out.println(immList.get(i));
+			System.out.println("Number of Requests: "+ immList.get(i).getCount());
 		}
 		System.out.println("\n\n List of 3 Strike Banned IP addresses");
 		for (int i=0;i<blackList.size();i++){
 			System.out.println(blackList.get(i));
+			System.out.println("Number of Requests: "+ blackList.get(i).getCount());
 		}
 		System.out.println("\n This program is presented to you by Universal Studios, thanks Obama");
 	}
 	public void updateLists(){
-		if(isChanged()){	
-			System.out.print('\f');
-			displayLists();
-		}
+		//if(isChanged()){	
+			//System.out.print('\f');
+			//displayLists();
+		//}
 	}
 }
 

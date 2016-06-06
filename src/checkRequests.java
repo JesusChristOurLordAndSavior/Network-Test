@@ -4,13 +4,21 @@ import java.util.Collections;
 public class checkRequests extends DDoS{
 
 	//somehow pass in as arrayList<request> the data in the log files
-	private ArrayList<request> tempRequests;
+	public ArrayList<request> tempRequests;
 	private ArrayList<String> tempIPs;
 	private int phaseIterations;
 	private boolean isChanged;
 	
+	public checkRequests(){
+		tempRequests= new ArrayList<request>();
+		tempIPs = new ArrayList<String>();
+		phaseIterations=-1;
+	}
+	
 	public void runCheckRequests(){
 		phaseIterations++;
+		createCount();
+		checkList();
 		if(isChanged)
 		{
 			createCount();
@@ -31,12 +39,8 @@ public class checkRequests extends DDoS{
 		isChanged=b; 
 	}
 	
-	public checkRequests(){
-		tempRequests= new ArrayList<request>();
-		tempIPs = new ArrayList<String>();
-		phaseIterations=-1;
-	}
-	//each new input in the 
+	
+	//each new input into a temporary arraylist of requests and a temporary list of ips for those requests
 	public void addToTRequests(request newRequest){
 		tempRequests.add(newRequest);
 		tempIPs.add(newRequest.getIP());	
@@ -46,11 +50,15 @@ public class checkRequests extends DDoS{
 		return tempRequests;
 	}
 	public void createCount(){
-		int length=tempRequests.size();
-		for (int i=0;i<length;i++)
+		//loops through tempRequests for updates. If the count variable of any request object is not equal to the frequency of the object
+		//in the ArrayList, set the count integer to the frequency
+		for (int i=0;i<tempRequests.size()-10;i++)
 		{
+
 			if (tempRequests.get(i).getCount()!=Collections.frequency(tempIPs,tempRequests.get(i).getIP())){
+				System.out.println("Previous count of IP:" + tempRequests.get(i).getIP()+ "\n is:" +tempRequests.get(i).getCount());
 				tempRequests.get(i).setCount(Collections.frequency(tempIPs,tempRequests.get(i).getIP()));
+				System.out.println("New count of IP:" + tempRequests.get(i).getIP()+ "\n is:" +tempRequests.get(i).getCount());
 			}
 		}
 	}

@@ -71,4 +71,7 @@ public class request {
 		this.userid=userid;
 	}
 	
+	public String toString(){
+		return "IP Address of Request:	"+getIP();
+	}
 }
