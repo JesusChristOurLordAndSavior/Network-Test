@@ -20,6 +20,7 @@ public class inputData extends checkRequests{
 			{
 			
 				String[] array1=myLine.split("	");
+				System.out.println(array1.length);
 				for(int i=0;i<array1.length;i++){
 					if(i%21==10){
 					

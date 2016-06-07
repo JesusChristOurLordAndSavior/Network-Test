@@ -11,6 +11,7 @@ public class mainProgram {
 			test.createCount();
 			test.runCheckRequests();
 			test.checkThreshholds();
+			test.writeLists();
 			//System.out.println(checkOne.getTempRequests().size());
 			
 			test.displayLists();

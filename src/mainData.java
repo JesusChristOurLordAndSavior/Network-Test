@@ -59,9 +59,10 @@ public class mainData extends mainProgram {
 		try{
 			
 			for (request r:list){
-				writer.write(r.getIP());
+				writer.write(r.toString());
 				writer.newLine();
 				System.out.println(r.getIP());
+				
 			}
 		}
 		catch(IOException e){
@@ -72,6 +73,7 @@ public class mainData extends mainProgram {
 	
 	public void writeLists(){
 		try{
+		writer = new BufferedWriter(new FileWriter("output.txt"));
 		writer.write("List of Temporarily Banned IP Addresses: ");
 		writer.newLine();
 		writeList(tempList);
@@ -83,7 +85,9 @@ public class mainData extends mainProgram {
 		writeList(blackList);
 		writer.write("This program is presented to you by Universal Studios, thanks Obama");
 		writer.newLine();
+		writer.close();
 		}
+		
 		catch(IOException e){
 			e.getStackTrace();
 		}
